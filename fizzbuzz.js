@@ -1,14 +1,12 @@
 function fizzBuzz(num, rules) {
         
     const result = [];
-    let set13 = false;
 
     if (rules.includes(3) && num % 3 == 0) {
         result.push("Fizz");
     }
 
     if (rules.includes(13) && num % 13 == 0) {
-        set13 = true;
         result.push("Fezz");
     }
 
@@ -24,7 +22,7 @@ function fizzBuzz(num, rules) {
     if (rules.includes(11) && num % 11 == 0) {
         // clear the array
         result.length = 0;
-        if (set13) {
+        if (rules.includes(13)) {
             result.push("FezzBong");
         } else {
             result.push("Bong");
@@ -72,3 +70,9 @@ rl.question("Enter a (positive) number limit: ", (num) => {
     }
     rl.close();
 });
+
+// to add new rules, could have user specify a number and a word and append that word to any multiple of the number
+// to add more complex rules, perhaps have a system for custom rules - e.g. can specify to overwrite all other rules, and have specialised rules for reversing
+// rules might be implemented as objects from a custom rule class
+// could add rule priority to all current and new rules, so that they get applied in priority order.
+// becomes more complex when rules involve multiple numbers (e.g the 11 and 13 rules interact with each other)
