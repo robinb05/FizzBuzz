@@ -1,27 +1,27 @@
-function fizzBuzz(num) {
+function fizzBuzz(num, rules) {
         
     const result = [];
     let set13 = false;
 
-    if (num % 3 == 0) {
+    if (rules.includes(3) && num % 3 == 0) {
         result.push("Fizz");
     }
 
-    if (num % 13 == 0) {
+    if (rules.includes(13) && num % 13 == 0) {
         set13 = true;
         result.push("Fezz");
     }
 
-    if (num % 5 == 0) {
+    if (rules.includes(5) && num % 5 == 0) {
         result.push("Buzz");
     }
 
-    if (num % 7 == 0) {
+    if (rules.includes(7) && num % 7 == 0) {
         result.push("Bang");
     }
 
     // 11 overwrites all updates apart the possible Fezz from 13
-    if (num % 11 == 0) {
+    if (rules.includes(11) && num % 11 == 0) {
         // clear the array
         result.length = 0;
         if (set13) {
@@ -32,7 +32,7 @@ function fizzBuzz(num) {
     }
 
     // 17 reverses the order of words
-    if (num % 17 == 0) {
+    if (rules.includes(17) && num % 17 == 0) {
         result.reverse();
     }
 
@@ -49,6 +49,26 @@ function fizzBuzz(num) {
     return result_str;
 }
 
-for (let i = 1; i <= 100; i++) {
-    console.log(fizzBuzz(i))
-}
+// get the relavent command line args for the rules, convert to integers
+// note irrelevant number rules will just be ignored
+const args = process.argv.slice(2);
+const rules = args.map(str => parseInt(str, 10));
+console.log(rules);
+
+const readline = require('readline');
+
+const rl = readline.createInterface({
+    input: process.stdin,
+    output: process.stdout
+});
+
+rl.question("Enter a (positive) number limit: ", (num) => {
+    if (num <= 0) {
+        console.log("Please enter a positive integer");
+        return;
+    }
+    for (let i = 1; i <= num; i++) {
+        console.log(fizzBuzz(i, rules));
+    }
+    rl.close();
+});
